@@ -1,0 +1,35 @@
+{
+  "name": "list-org-secrets",
+  "version": "0.1.0",
+  "description": "Lists all Secrets found by 'Secret Scanning' using GitHub Advanced Security",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha  -- --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/octodemo/list-org-secrets.git"
+  },
+  "keywords": [
+    "secrets",
+    "github",
+    "advanced",
+    "security",
+    "ghas",
+    "secret",
+    "scanning"
+  ],
+  "author": "Pedro Lacerda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/octodemo/list-org-secrets/issues"
+  },
+  "homepage": "https://github.com/octodemo/list-org-secrets#readme",
+  "dependencies": {
+    "@octokit/core": "^3.3.0",
+    "minimist": "^1.2.5",
+    "mocha": "^8.3.1",
+    "octokit": "^1.0.0-hello-world"
+  }
+}
