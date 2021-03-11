@@ -23,6 +23,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 15
+    - run: node ci
     - run: node index.js --token $PAT --org $ORG_NAME
     
     - name: Upload a Build Artifact
