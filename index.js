@@ -6,7 +6,7 @@ var token = argv.token;
 var org = argv.org;
 
 const octokit = new Octokit({ auth: token });
-let listRepos = [];
+// let listRepos = [];
 let listSecrets = [];
 
 async function getRepoList(page){
@@ -37,7 +37,7 @@ const getOrgSecrets = async _ => {
     response = await getRepoList(i);
 
     response.data.forEach(repo => {
-      listRepos.push(repo.name);
+      // listRepos.push(repo.name);
       getSecrets(repo.name);
     });
 
@@ -54,30 +54,19 @@ const getOrgSecrets = async _ => {
 
 const getSecrets = async (repo) => {
   let i = 0;
-  let response;
+  // let response;
   let isCodeScanningDisabled = false;
-  let responseLength;
+  // let responseLength;
   do {
-    await getSecretsPerRepo(i, repo)
-      .then((response) => {
-        response.data.forEach(secret => {
-        listSecrets.push(secret);
-        });
-      })
-      .catch((err) => {
-        console.log("Secret scanning is disabled on this repository.")
-        isCodeScanningDisabled = true;
-      });
-
+    response = await getSecretsPerRepo(i, repo)
+      
+    response.data.forEach(secret => {
+      listSecrets.push(secret);
+    });
+      
     i++;
 
-    try{
-      responseLength = response.data.length;
-    } catch (err) {
-      responseLength = 0;
-    }
-
-  } while (!isCodeScanningDisabled || responseLength !== 0)
+  } while (response.data.length !== 0)
 }
 
 getOrgSecrets();
