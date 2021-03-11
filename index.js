@@ -56,21 +56,28 @@ const getSecrets = async (repo) => {
   let i = 0;
   let response;
   let isCodeScanningDisabled = false;
-
+  let responseLength;
   do {
-    response = await getSecretsPerRepo(i, repo)
+    await getSecretsPerRepo(i, repo)
+      .then((response) => {
+        response.data.forEach(secret => {
+        listSecrets.push(secret);
+        });
+      })
       .catch((err) => {
         console.log("Secret scanning is disabled on this repository.")
         isCodeScanningDisabled = true;
       });
 
-    response.data.forEach(secret => {
-      listSecrets.push(secret);
-    });
-
     i++;
 
-  } while (isCodeScanningDisabled || response.data.length !== 0)
+    try{
+      responseLength = response.data.length;
+    } catch (err) {
+      responseLength = 0;
+    }
+
+  } while (!isCodeScanningDisabled || responseLength !== 0)
 }
 
 getOrgSecrets();
